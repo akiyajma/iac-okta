@@ -1,0 +1,41 @@
+{
+    "name": "Python Dev Environment",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "ms-python.python",
+          "ms-python.isort",
+          "ms-python.black-formatter",
+          "ms-python.flake8",
+          "esbenp.prettier-vscode"
+        ],
+        "settings": {
+          "python.defaultInterpreterPath": "/usr/local/bin/python",
+          "python.analysis.extraPaths": ["~/.local/lib/python3.12/site-packages"],
+          "python.formatting.provider": "black",
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          },
+          "python.linting.enabled": true,
+          "python.linting.flake8Enabled": true,
+          "python.linting.pylintEnabled": false,
+          "flake8.args": [
+            "--max-line-length=160",
+            "--exclude=tests"
+          ],
+          "autoDocstring.docstringFormat": "google"
+        }
+      }
+    },
+    "postCreateCommand": "pip install pip-tools --break-system-packages && pip-compile dev-requirements.in && pip-sync dev-requirements.txt",
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ]
+  }
+  

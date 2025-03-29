@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>iac-okta-get-resource.main API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>iac-okta-get-resource.main</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="iac-okta-get-resource.main.create_output_zip"><code class="name flex">
+<span>def <span class="ident">create_output_zip</span></span>(<span>output_folder='output', zip_filename='okta_data.zip')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_output_zip(output_folder=&#39;output&#39;, zip_filename=&#39;okta_data.zip&#39;):
+    &#34;&#34;&#34;
+    Archives all files in the specified output folder into a single ZIP file.
+
+    Args:
+        output_folder (str, optional): The folder containing output files. Default is &#39;output&#39;.
+        zip_filename (str, optional): The name of the generated ZIP file. Default is &#39;okta_data.zip&#39;.
+
+    Returns:
+        str or None: The path to the created ZIP file, or None if the folder is empty.
+    &#34;&#34;&#34;
+    if not os.path.exists(output_folder):
+        logger.info(
+            &#34;Output folder &#39;%s&#39; does not exist. Creating it.&#34;, output_folder)
+        os.makedirs(output_folder)
+
+    has_files = any(files for _, _, files in os.walk(output_folder))
+    if not has_files:
+        logger.info(
+            &#34;No files found in &#39;%s&#39;. Skipping zip creation.&#34;, output_folder)
+        return None
+
+    with zipfile.ZipFile(zip_filename, &#39;w&#39;, zipfile.ZIP_DEFLATED) as zipf:
+        for root, _, files in os.walk(output_folder):
+            for file in files:
+                filepath = os.path.join(root, file)
+                zipf.write(filepath, arcname=file)
+
+    logger.info(&#34;Created ZIP file: %s&#34;, zip_filename)
+    return zip_filename</code></pre>
+</details>
+<div class="desc"><p>Archives all files in the specified output folder into a single ZIP file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>output_folder</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The folder containing output files. Default is 'output'.</dd>
+<dt><strong><code>zip_filename</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>The name of the generated ZIP file. Default is 'okta_data.zip'.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code> or <code>None</code></dt>
+<dd>The path to the created ZIP file, or None if the folder is empty.</dd>
+</dl></div>
+</dd>
+<dt id="iac-okta-get-resource.main.execute_action"><code class="name flex">
+<span>def <span class="ident">execute_action</span></span>(<span>action, input_data, access_token, okta_domain)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def execute_action(action, input_data, access_token, okta_domain):
+    &#34;&#34;&#34;
+    Executes the specified action using the provided Okta access token and domain.
+
+    This function supports several actions such as retrieving all users,
+    all groups, detailed information for a specific group or app, and devices.
+    It also writes CSV files to the &#39;output/&#39; directory.
+
+    Args:
+        action (str): The name of the action to perform.
+        input_data (dict): Input parameters such as app_id, group_id, or device_id.
+        access_token (str): Valid Okta access token.
+        okta_domain (str): Base URL for the Okta API.
+
+    Returns:
+        dict or list: The resulting data or a message dictionary.
+
+    Raises:
+        SystemExit: If required fields are missing or an unsupported action is provided.
+    &#34;&#34;&#34;
+    if action == &#34;all_users&#34;:
+        return get_okta_all_user(access_token, okta_domain)
+    elif action == &#34;all_groups&#34;:
+        return get_okta_all_group(access_token, okta_domain)
+    elif action == &#34;detail_groups&#34;:
+        group_id = input_data.get(&#34;group_id&#34;)
+        if not group_id:
+            logger.error(&#34;Action &#39;detail_groups&#39; requires a group_id.&#34;)
+            sys.exit(1)
+        get_okta_group_detail(access_token, okta_domain, group_id)
+        get_okta_group_apps(access_token, okta_domain, group_id)
+        get_okta_group_users(access_token, okta_domain, group_id)
+        return {&#34;message&#34;: &#34;Group details, apps, and user data exported to CSV.&#34;}
+    elif action == &#34;all_apps&#34;:
+        return get_okta_all_apps(access_token, okta_domain)
+    elif action == &#34;detail_app&#34;:
+        app_id = input_data.get(&#34;app_id&#34;)
+        if not app_id:
+            logger.error(&#34;Action &#39;detail_app&#39; requires an app_id.&#34;)
+            sys.exit(1)
+        get_okta_app_detail(access_token, okta_domain, app_id)
+        get_okta_app_groups(access_token, okta_domain, app_id)
+        return {&#34;message&#34;: &#34;Application details and associated group information exported to CSV.&#34;}
+    elif action == &#34;all_devices&#34;:
+        return get_okta_all_devices(access_token, okta_domain)
+    elif action == &#34;detail_device&#34;:
+        device_id = input_data.get(&#34;device_id&#34;)
+        if not device_id:
+            logger.error(&#34;Action &#39;detail_device&#39; requires a device_id.&#34;)
+            sys.exit(1)
+        get_okta_device_detail(access_token, okta_domain, device_id)
+        return {&#34;message&#34;: f&#34;Device details for {device_id} exported to CSV.&#34;}
+    else:
+        logger.error(&#34;Unsupported action: %s&#34;, action)
+        sys.exit(1)</code></pre>
+</details>
+<div class="desc"><p>Executes the specified action using the provided Okta access token and domain.</p>
+<p>This function supports several actions such as retrieving all users,
+all groups, detailed information for a specific group or app, and devices.
+It also writes CSV files to the 'output/' directory.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>action</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the action to perform.</dd>
+<dt><strong><code>input_data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Input parameters such as app_id, group_id, or device_id.</dd>
+<dt><strong><code>access_token</code></strong> :&ensp;<code>str</code></dt>
+<dd>Valid Okta access token.</dd>
+<dt><strong><code>okta_domain</code></strong> :&ensp;<code>str</code></dt>
+<dd>Base URL for the Okta API.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code> or <code>list</code></dt>
+<dd>The resulting data or a message dictionary.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>SystemExit</code></dt>
+<dd>If required fields are missing or an unsupported action is provided.</dd>
+</dl></div>
+</dd>
+<dt id="iac-okta-get-resource.main.load_input"><code class="name flex">
+<span>def <span class="ident">load_input</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_input():
+    &#34;&#34;&#34;
+    Loads the input data required for the script execution.
+    This function attempts to retrieve JSON input either from the
+    &#39;INPUT_JSON&#39; environment variable or from a local &#39;input.json&#39; file.
+
+    Returns:
+        dict: Parsed input data.
+
+    Raises:
+        SystemExit: If loading or parsing the JSON fails.
+    &#34;&#34;&#34;
+    input_data = None
+    input_json = os.environ.get(&#34;INPUT_JSON&#34;)
+    if input_json:
+        try:
+            input_data = json.loads(input_json)
+        except Exception as error:
+            logger.error(&#34;Error parsing INPUT_JSON: %s&#34;, error)
+            sys.exit(1)
+    elif os.path.exists(&#34;input.json&#34;):
+        try:
+            with open(&#34;input.json&#34;, &#34;r&#34;, encoding=&#34;utf-8&#34;) as f:
+                input_data = json.load(f)
+        except Exception as error:
+            logger.error(&#34;Error reading input.json: %s&#34;, error)
+            sys.exit(1)
+    else:
+        logger.error(&#34;Input data not found.&#34;)
+        sys.exit(1)
+    return input_data</code></pre>
+</details>
+<div class="desc"><p>Loads the input data required for the script execution.
+This function attempts to retrieve JSON input either from the
+'INPUT_JSON' environment variable or from a local 'input.json' file.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>Parsed input data.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>SystemExit</code></dt>
+<dd>If loading or parsing the JSON fails.</dd>
+</dl></div>
+</dd>
+<dt id="iac-okta-get-resource.main.load_okta_credentials"><code class="name flex">
+<span>def <span class="ident">load_okta_credentials</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_okta_credentials():
+    &#34;&#34;&#34;
+    Loads the credentials required for Okta API authentication from environment variables.
+
+    Environment Variables:
+        OKTA_DOMAIN, OKTA_CLIENT_ID, OKTA_KEY_PEM_BASE64 (base64-encoded)
+
+    Returns:
+        tuple: (okta_domain, client_id, private_key)
+
+    Raises:
+        SystemExit: If any required environment variable is missing or if decoding fails.
+    &#34;&#34;&#34;
+    okta_domain = os.environ.get(&#34;OKTA_DOMAIN&#34;)
+    client_id = os.environ.get(&#34;OKTA_CLIENT_ID&#34;)
+    private_key_base64 = os.environ.get(&#34;OKTA_KEY_PEM_BASE64&#34;)
+
+    missing = []
+    if not okta_domain:
+        missing.append(&#34;OKTA_DOMAIN&#34;)
+    if not client_id:
+        missing.append(&#34;OKTA_CLIENT_ID&#34;)
+    if not private_key_base64:
+        missing.append(&#34;OKTA_KEY_PEM_BASE64&#34;)
+
+    if missing:
+        logger.error(&#34;Missing required Okta credentials: %s&#34;,
+                     &#39;, &#39;.join(missing))
+        sys.exit(1)
+
+    try:
+        # Decode the base64 encoded private key to get the original PEM string.
+        private_key = base64.b64decode(private_key_base64).decode(&#39;utf-8&#39;)
+    except Exception as error:
+        logger.error(&#34;Failed to decode OKTA_KEY_PEM_BASE64: %s&#34;, error)
+        sys.exit(1)
+
+    return okta_domain, client_id, private_key</code></pre>
+</details>
+<div class="desc"><p>Loads the credentials required for Okta API authentication from environment variables.</p>
+<p>Environment Variables:
+OKTA_DOMAIN, OKTA_CLIENT_ID, OKTA_KEY_PEM_BASE64 (base64-encoded)</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>tuple</code></dt>
+<dd>(okta_domain, client_id, private_key)</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>SystemExit</code></dt>
+<dd>If any required environment variable is missing or if decoding fails.</dd>
+</dl></div>
+</dd>
+<dt id="iac-okta-get-resource.main.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    &#34;&#34;&#34;
+    Orchestrates the overall flow of retrieving data from Okta and attaching the results to a Jira ticket.
+
+    Steps:
+        1. Load input data from environment variables or a file.
+           → JSON input should include &#39;action&#39; and, if needed, &#39;app_id&#39;, &#39;group_id&#39;, or &#39;device_id&#39;.
+        2. Load required Okta API credentials from environment variables.
+           (OKTA_DOMAIN, OKTA_CLIENT_ID, OKTA_KEY_PEM_BASE64)
+        3. Obtain an access token.
+        4. Execute the specified Okta action.
+        5. Export the results to CSV files in the &#39;output/&#39; directory.
+        6. Create a ZIP archive of the results.
+        7. Attach the ZIP file to a Jira ticket.
+
+    The script exits with code 1 if any required step is missing.
+    &#34;&#34;&#34;
+    input_data = load_input()
+
+    action = input_data.get(&#34;action&#34;)
+    if not action:
+        logger.error(&#34;The &#39;action&#39; key is missing from the input JSON.&#34;)
+        sys.exit(1)
+
+    okta_domain, client_id, private_key = load_okta_credentials()
+
+    # Read Okta scope from environment variable; default if not set.
+    scope = os.environ.get(
+        &#34;OKTA_SCOPE&#34;, &#34;okta.groups.read okta.users.read okta.apps.read&#34;)
+
+    try:
+        access_token = get_okta_access_token(
+            client_id=client_id,
+            okta_domain=okta_domain,
+            private_key_pem=private_key,
+            scope=scope
+        )
+    except Exception as error:
+        logger.error(&#34;Failed to obtain access token: %s&#34;, error)
+        sys.exit(1)
+
+    execute_action(action, input_data, access_token, okta_domain)
+
+    zip_filepath = create_output_zip()
+    if zip_filepath:
+        try:
+            attach_zip_to_jira(zip_filepath)
+        except Exception as error:
+            logger.warning(&#34;Warning: Failed to attach zip to Jira: %s&#34;, error)
+    else:
+        logger.info(&#34;No output files found to attach.&#34;)</code></pre>
+</details>
+<div class="desc"><p>Orchestrates the overall flow of retrieving data from Okta and attaching the results to a Jira ticket.</p>
+<h2 id="steps">Steps</h2>
+<ol>
+<li>Load input data from environment variables or a file.
+→ JSON input should include 'action' and, if needed, 'app_id', 'group_id', or 'device_id'.</li>
+<li>Load required Okta API credentials from environment variables.
+(OKTA_DOMAIN, OKTA_CLIENT_ID, OKTA_KEY_PEM_BASE64)</li>
+<li>Obtain an access token.</li>
+<li>Execute the specified Okta action.</li>
+<li>Export the results to CSV files in the 'output/' directory.</li>
+<li>Create a ZIP archive of the results.</li>
+<li>Attach the ZIP file to a Jira ticket.</li>
+</ol>
+<p>The script exits with code 1 if any required step is missing.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="iac-okta-get-resource" href="index.html">iac-okta-get-resource</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="iac-okta-get-resource.main.create_output_zip" href="#iac-okta-get-resource.main.create_output_zip">create_output_zip</a></code></li>
+<li><code><a title="iac-okta-get-resource.main.execute_action" href="#iac-okta-get-resource.main.execute_action">execute_action</a></code></li>
+<li><code><a title="iac-okta-get-resource.main.load_input" href="#iac-okta-get-resource.main.load_input">load_input</a></code></li>
+<li><code><a title="iac-okta-get-resource.main.load_okta_credentials" href="#iac-okta-get-resource.main.load_okta_credentials">load_okta_credentials</a></code></li>
+<li><code><a title="iac-okta-get-resource.main.main" href="#iac-okta-get-resource.main.main">main</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>

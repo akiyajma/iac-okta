@@ -1,0 +1,57 @@
+name: Execute Get Okta Resource
+
+on:
+  workflow_dispatch:
+    inputs:
+      input_json:
+        description: 'JSON input containing action, group_id, and app_id (e.g., {"action": "all_users", "group_id": "", "app_id": ""})'
+        required: true
+        type: string
+        default: |
+          {
+            "action": "all_users",
+            "group_id": "",
+            "app_id": "",
+            "device_id": ""
+          }
+      jira_issue_key:
+        description: 'Jira issue key to link the commit to (e.g., "PROJ-123")'
+        required: true
+        type: string
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+
+    env:
+      OKTA_DOMAIN: "https://trial-1770544.okta.com"
+      JIRA_DOMAIN: "zeon-service-management.atlassian.net"
+      OKTA_SCOPE: "okta.groups.read okta.users.read okta.apps.read okta.devices.read"
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install pip-tools and dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-tools --break-system-packages
+          pip-sync requirements.txt
+
+      - name: Run resource management script
+        run: python main.py
+        env:
+          INPUT_JSON: ${{ github.event.inputs.input_json }}
+          OKTA_DOMAIN: ${{ env.OKTA_DOMAIN }}
+          OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
+          OKTA_KEY_PEM_BASE64: ${{ secrets.OKTA_KEY_PEM_BASE64 }}
+          JIRA_DOMAIN: ${{ env.JIRA_DOMAIN }}
+          JIRA_PAT: ${{ secrets.JIRA_PAT }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_ISSUE_KEY: ${{ inputs.jira_issue_key }}
