@@ -1,6 +1,7 @@
+import builtins
 import os
 
-from jira_attachment import attach_zip_to_jira
+from jira_attachment import attach_zip_and_comment
 
 
 class DummyResponse:
@@ -8,83 +9,91 @@ class DummyResponse:
     A mock HTTP response object to simulate requests.post responses.
     """
 
-    def __init__(self, status_code, text=""):
+    def __init__(self, status_code, json_data=None, text=""):
         self.status_code = status_code
+        self._json = json_data or {}
         self.text = text
 
+    def json(self):
+        return self._json
 
-def dummy_post_success(url, headers, files):
+
+def dummy_temp_upload_success(url, headers, files):
     """
-    Simulate a successful HTTP POST request.
+    Simulate successful temporary attachment upload to Service Desk.
+    """
+    return DummyResponse(201, {
+        "temporaryAttachments": [{
+            "temporaryAttachmentId": "temp-12345",
+            "fileName": "dummy.zip"
+        }]
+    })
+
+
+def dummy_attachment_success(url, headers, json):
+    """
+    Simulate successful permanent attachment and public comment.
     """
     return DummyResponse(201)
 
 
-def dummy_post_failure(url, headers, files):
+def dummy_temp_upload_failure(url, headers, files):
     """
-    Simulate a failed HTTP POST request with status 400.
+    Simulate failed temporary attachment upload.
     """
-    return DummyResponse(400, "Bad Request")
+    return DummyResponse(400, text="Bad Request")
 
 
-def dummy_open_zip(filepath, mode):
+def dummy_file_open(filepath, mode):
     """
-    Simulate opening a zip file for reading, returning a dummy file-like object.
+    Simulate opening a zip file.
     """
     class DummyFile:
-        def __enter__(self):
-            return self
-
-        def __exit__(self, exc_type, exc_value, traceback):
-            pass
-
-        def read(self):
-            return b"dummy zip content"
-
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def read(self): return b"dummy content"
     return DummyFile()
 
 
 def test_attach_zip_success(monkeypatch, tmp_path):
     """
-    Test that attach_zip_to_jira() completes without error when the upload is successful.
+    Test that attach_zip_and_comment() completes successfully when both steps succeed.
     """
-    # Set required environment variables for the Jira upload
     os.environ["JIRA_DOMAIN"] = "jira.example.com"
     os.environ["JIRA_USER_EMAIL"] = "user@example.com"
     os.environ["JIRA_PAT"] = "dummy_pat"
     os.environ["JIRA_ISSUE_KEY"] = "TEST-1"
+    os.environ["SERVICE_DESK_ID"] = "2"
 
-    # Mock requests.post and open
-    monkeypatch.setattr("jira_attachment.requests.post", dummy_post_success)
-    monkeypatch.setattr("builtins.open", dummy_open_zip)
+    monkeypatch.setattr("jira_attachment.requests.post", lambda url, headers, **kwargs: (
+        dummy_temp_upload_success(url, headers, kwargs.get("files"))
+        if "attachTemporaryFile" in url
+        else dummy_attachment_success(url, headers, kwargs.get("json"))
+    ))
+    monkeypatch.setattr(builtins, "open", dummy_file_open)
 
-    # Simulate a dummy zip file path
-    dummy_zip = str(tmp_path / "dummy.zip")
-
-    # No exception should be raised during upload
-    attach_zip_to_jira(dummy_zip)
+    dummy_zip_path = str(tmp_path / "dummy.zip")
+    attach_zip_and_comment(dummy_zip_path)
 
 
-def test_attach_zip_failure(monkeypatch, tmp_path, capsys):
+def test_attach_zip_temp_upload_failure(monkeypatch, tmp_path, capsys):
     """
-    Test that an error message is printed to stdout when the upload fails.
+    Test that attach_zip_and_comment() raises error when temp upload fails.
     """
-    # Set required environment variables for the Jira upload
     os.environ["JIRA_DOMAIN"] = "jira.example.com"
     os.environ["JIRA_USER_EMAIL"] = "user@example.com"
     os.environ["JIRA_PAT"] = "dummy_pat"
     os.environ["JIRA_ISSUE_KEY"] = "TEST-1"
+    os.environ["SERVICE_DESK_ID"] = "2"
 
-    # Mock failed upload and file opening
-    monkeypatch.setattr("jira_attachment.requests.post", dummy_post_failure)
-    monkeypatch.setattr("builtins.open", dummy_open_zip)
+    monkeypatch.setattr("jira_attachment.requests.post",
+                        dummy_temp_upload_failure)
+    monkeypatch.setattr(builtins, "open", dummy_file_open)
 
-    # Simulate a dummy zip file path
-    dummy_zip = str(tmp_path / "dummy.zip")
+    dummy_zip_path = str(tmp_path / "dummy.zip")
 
-    # Attempt to upload, expecting failure
-    attach_zip_to_jira(dummy_zip)
-
-    # Capture stdout and verify error message is present
-    captured = capsys.readouterr().out
-    assert "Failed to attach ZIP file to Jira:" in captured
+    try:
+        attach_zip_and_comment(dummy_zip_path)
+        assert False, "Expected RuntimeError due to failed temp upload"
+    except RuntimeError as e:
+        assert "Temporary file upload failed" in str(e)

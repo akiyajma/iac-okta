@@ -5,7 +5,7 @@ import os
 import sys
 import zipfile
 
-from jira_attachment import attach_zip_to_jira
+from jira_attachment import attach_zip_and_comment
 from okta_app import (get_okta_all_apps, get_okta_app_detail,
                       get_okta_app_groups)
 from okta_auth import get_okta_access_token
@@ -230,7 +230,7 @@ def main():
     zip_filepath = create_output_zip()
     if zip_filepath:
         try:
-            attach_zip_to_jira(zip_filepath)
+            attach_zip_and_comment(zip_filepath)
         except Exception as error:
             logger.warning("Warning: Failed to attach zip to Jira: %s", error)
     else:

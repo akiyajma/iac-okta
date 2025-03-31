@@ -294,7 +294,9 @@ def test_main_success(monkeypatch, tmp_path):
                         dummy_get_okta_access_token)
     monkeypatch.setattr(main, "get_okta_all_user",
                         lambda token, domain: [{"id": "user1"}])
-    monkeypatch.setattr(main, "attach_zip_to_jira", dummy_attach_zip_to_jira)
+    monkeypatch.setattr(main, "attach_zip_and_comment",
+                        dummy_attach_zip_to_jira)
+
     monkeypatch.setattr(main, "create_output_zip",
                         lambda *args, **kwargs: "dummy.zip")
     monkeypatch.setattr(main, "load_input", lambda: sample_input)
